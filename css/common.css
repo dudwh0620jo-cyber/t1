@@ -77,7 +77,7 @@ header nav .gnb>li {
 }
 
 header nav .gnb>li>a {
-  color: var((--w-color));
+  color: var(--w-color);
   font-weight: 400;
   font-size: 1.25rem;
   height: 100%;
