@@ -341,7 +341,7 @@
   overflow-wrap: break-word;
 }
 
-.partner ul li .txt button {
+.partner ul li .txt .btn {
   position: absolute;
   right: 30px;
   bottom: 30px;
@@ -354,4 +354,91 @@
   font-weight: 100;
   border-radius: 50%;
   font-size: 2rem;
+}
+
+/* match_results */
+.match_results {
+  width: 100%;
+  height: 1080px;
+  padding: 80px 80px 180px;
+  background: linear-gradient(180deg,
+      var(--main-color) 0%,
+      var(--main-color) 25%,
+      #1A0005 50%,
+      var(--main-color) 75%,
+      var(--main-color) 100%);
+}
+
+.match_results .result {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 210px;
+}
+
+/* 왼쪽 필터 */
+.result_game {
+  display: flex;
+  flex-direction: column;
+  padding-top: 100px;
+  gap: 10px;
+}
+
+.result_game button {
+  background: none;
+  border: 0;
+  color: var(--w-color);
+  font-size: 1.375rem;
+  cursor: pointer;
+  position: relative;
+  padding: 4px 14px;
+}
+
+.result_game button:hover {
+  color: var(--main-gray);
+}
+
+.result_game button.active {
+  color: var(--main-red);
+  border-left: 2px solid var(--main-red);
+}
+
+/* 오른쪽 경기 리스트 */
+.match_list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.match_item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 150px;
+}
+
+.match_item .rally {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.match_item .rally p {
+  line-height: 1.4;
+  font-size: 1.125rem;
+}
+
+.match_item h4 {
+  font-size: 2rem;
+  font-family: var(--Anton);
+  color: var(--w-color);
+}
+
+.match_item h4 span {
+  color: var(--main-red);
+}
+
+.match_results img {
+  width: 80px;
 }

@@ -329,7 +329,7 @@
             <div class="txt">
               <p>T1의 Global Partners는 Red Sea Global, SK telecom, Samsung Odyssey, Red Bull 등 글로벌 브랜드들과의 협업을 통해 e스포츠를 넘어
                 기술·라이프스타일·엔터테인먼트 전반에서 T1의 브랜드 가치를 확장하고 있습니다.</p>
-              <button>+</button>
+              <a href="#" class="btn">+</a>
             </div><!-- //.txt -->
           </li>
           <li>
@@ -338,7 +338,7 @@
             <div class="txt">
               <p>T1의 Official Partners는 ABLY, 우리은행, Spotify, GOALSTUDIO, SOOP 등의 브랜드들과 함께 팀 운영과 콘텐츠 전반에 직접 참여하며, 유니폼,
                 캠페인, 오리지널 콘텐츠 등 다양한 활동을 통해 T1의 브랜드 가치를 라이프스타일·금융·패션 등 영역으로 확장하고 있습니다.</p>
-              <button>+</button>
+              <a href="#" class="btn">+</a>
             </div><!-- //.txt -->
           </li>
           <li>
@@ -347,7 +347,7 @@
             <div class="txt">
               <p>T1의 Technical Partners는 SteelSeries, Samsung Odyssey, Secretlab, Klevv, Pulsar 등과 함께 경기력과 장비, 환경을 책임지는
                 핵심 파트너로, 프로가 쓰는 장비와 기술을 기반으로 최적의 퍼포먼스와 팬 경험을 제공합니다.</p>
-              <button>+</button>
+              <a href="#" class="btn">+</a>
             </div><!-- //.txt -->
           </li>
           <li>
@@ -356,13 +356,142 @@
             <div class="txt">
               <p>T1의 Associate Partners는 Vic Team, Inspire, 대웅제약 등과 함께 종목별 팀 단위와 선수 후원·브랜드 협력에 참여하는 파트너로, 각 팀 페이지와 선수
                 컨디션·웰빙 활동을 통해 팬 접점과 긍정적 브랜드 이미지를 확대합니다.</p>
-              <button>+</button>
+              <a href="#" class="btn">+</a>
             </div><!-- //.txt -->
           </li>
         </ul>
       </section>
-      <section class="match_schedule"></section>
-      <section class="match_results"></section>
+      <section class="match_schedule">
+        <div class="m_top">
+          <h2 class="tit_eng">Match Schedule</h2>
+          <div class="select_box">
+            <button type="button" class="schedule_filter">schedule <i class="fa-solid fa-angle-up"></i></button>
+            <ul>
+              <li><button type="button" id="s_all">All</button></li>
+              <li><button type="button" id="s_lol">League of Legends</button></li>
+              <li><button type="button" id="s_val">Valorant</button></li>
+              <li><button type="button" id="s_ove">overwatch 2</button></li>
+              <li><button type="button" id="s_pub">PUBG</button></li>
+              <li><button type="button" id="s_fc">FC Online</button></li>
+              <li><button type="button" id="s_tea">Teamfight Tactics</button></li>
+              <li><button type="button" id="s_fig">Fighting Games</button></li>
+            </ul>
+          </div><!-- //.select_box -->
+        </div><!-- //.m_top -->
+        <div class="m_bottom">
+          <div class="m_left">
+            <div class="calendar">
+              <div class="header">
+                <button type="button" id="prev"><i class="fa-solid fa-angle-left"></i></button>
+                <h3 id="monthYear"></h3>
+                <button type="button" id="next"><i class="fa-solid fa-angle-right"></i></button>
+              </div><!-- //.header -->
+              <div class="days" id="days"></div>
+            </div><!-- //.calendar -->
+          </div><!-- //.m_left -->
+          <div class="m_right">
+            <ul class="schedule_list">
+              <li class="schedule_item lol">
+                <div class="date"></div>
+                <div class="info">
+                  <h4></h4>
+                  <span><br></span>
+                </div>
+              </li>
+              <li class="schedule_item lol">
+                <div class="date"></div>
+                <div class="info">
+                  <h4></h4>
+                  <span><br></span>
+                </div>
+              </li>
+              <li class="schedule_item lol">
+                <div class="date"></div>
+                <div class="info">
+                  <h4></h4>
+                  <span><br></span>
+                </div>
+              </li>
+            </ul>
+          </div><!-- //.m_right -->
+        </div><!-- //.m_bottom -->
+      </section>
+      <section class="match_results">
+        <h2 class="tit_eng">Recent Match Results</h2>
+        <div class="result">
+          <div class="r_left">
+            <ul class="result_game">
+              <li><button type="button" class="" id="r_all">ALL MATCH</button></li>
+              <li><button type="button" class="active" id="r_lol">LEAGUE OF LEGENDS</button></li>
+              <li><button type="button" class="" id="r_val">VALORANT</button></li>
+              <li><button type="button" class="" id="r_ove">OVERWATCH 2</button></li>
+              <li><button type="button" class="" id="r_pub">PUBG</button></li>
+              <li><button type="button" class="" id="r_fc">FC ONLINE</button></li>
+              <li><button type="button" class="" id="r_tea">TEAMFIGHT TACTICS</button></li>
+              <li><button type="button" class="" id="r_fig">FIGHTING GAMES</button></li>
+            </ul>
+          </div><!-- //.r_left -->
+          <div class="r_right">
+            <ul class="match_list">
+              <li class="match_item lol">
+                <div class="rally">
+                  <img src="img/logo/lck_white.png" alt="lck">
+                  <p>WORLDS 2025<br>vs KT</p>
+                </div><!-- //.rally -->
+                <div class="score">
+                  <img src="img/logo/logo_red.png" alt="t1">
+                  <h4><span>3 ◂ </span>2</h4>
+                  <img src="img/logo/kt.png" alt="kt">
+                </div><!-- //.score -->
+              </li>
+              <li class="match_item lol">
+                <div class="rally">
+                  <img src="img/logo/lck_white.png" alt="lck">
+                  <p>WORLDS 2025<br>vs IG</p>
+                </div><!-- //.rally -->
+                <div class="score">
+                  <img src="img/logo/logo_red.png" alt="t1">
+                  <h4><span>3 ◂ </span>0</h4>
+                  <img src="img/logo/ig.png" alt="ig">
+                </div><!-- //.score -->
+              </li>
+              <li class="match_item lol">
+                <div class="rally">
+                  <img src="img/logo/lck_white.png" alt="lck">
+                  <p>WORLDS 2025<br>vs AL</p>
+                </div><!-- //.rally -->
+                <div class="score">
+                  <img src="img/logo/logo_red.png" alt="t1">
+                  <h4><span>3 ◂ </span>2</h4>
+                  <img src="img/logo/al.png" alt="al">
+                </div><!-- //.score -->
+              </li>
+              <li class="match_item lol">
+                <div class="rally">
+                  <img src="img/logo/lck_white.png" alt="lck">
+                  <p>WORLDS 2025<br>vs MKOI</p>
+                </div><!-- //.rally -->
+                <div class="score">
+                  <img src="img/logo/logo_red.png" alt="t1">
+                  <h4><span>2 ◂ </span>0</h4>
+                  <img src="img/logo/moki.png" alt="moki">
+                </div><!-- //.score -->
+              </li>
+              <li class="match_item lol">
+                <div class="rally">
+                  <img src="img/logo/lck_white.png" alt="lck">
+                  <p>WORLDS 2025<br>vs 100</p>
+                </div><!-- //.rally -->
+                <div class="score">
+                  <img src="img/logo/logo_red.png" alt="t1">
+                  <h4><span>2 ◂ </span>0</h4>
+                  <img src="img/logo/thieves.png" alt="thieves">
+                </div><!-- //.score -->
+              </li>
+            </ul>
+          </div><!-- //.r_right -->
+        </div><!-- //.result -->
+      </section>
     </main>
     <footer>
       <div class="inner">
