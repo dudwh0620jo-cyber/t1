@@ -250,37 +250,8 @@ document.addEventListener('DOMContentLoaded', () => {
       matchList.querySelectorAll('.match_item').forEach(item => {
         item.style.display = item.classList.contains(game) ? '' : 'none';
       });
-      // 필터가 변경되었으니 가시성 재확인 (상단 필터용)
-      updateMatchListByMonth();
     });
   });
-
-  // match_list: 2026년 3월일 때만 표시
-  function updateMatchListByMonth() {
-    if (!matchList || !monthYearElement) return;
-
-    // 현재 표시된 연월 텍스트 확인
-    const yearMonth = monthYearElement.textContent.trim();
-
-    // 하단 필터 중 LEAGUE OF LEGENDS(r_lol) 또는 ALL MATCH(r_all)가 활성화되었는지 확인
-    const activeBtn = document.querySelector('.result_game button.active');
-    const isLolOrAllActive = activeBtn && (activeBtn.id === 'r_lol' || activeBtn.id === 'r_all');
-
-    // 1. 연월이 '2026.3'인지 확인 (직접 텍스트 비교)
-    const isTargetMonth = yearMonth === '2026.3';
-
-    // 2. 상단 필터(select_box)의 상태도 고려 (만약 상단 필터가 LOL이 아니면 하단 리스트가 비어있을 수 있음)
-    const topFilterBtn = document.querySelector('.schedule_filter');
-    const isTopFilterLol = topFilterBtn && topFilterBtn.textContent.toLowerCase().includes('league of legends');
-
-    // 최종 조건: 2026.3월이고, (하단 필터가 LOL/ALL 중 하나이거나 또는 상단 필터가 LOL인 경우)
-    // 유저 요청 'r_lol 이고 monthYear 2026.3' 에 가장 충실하게 대응
-    if (isTargetMonth && (isLolOrAllActive || isTopFilterLol)) {
-      matchList.style.display = 'flex';
-    } else {
-      matchList.style.display = 'none';
-    }
-  }
 
   // result_game 버튼 필터링
   const resultBtns = document.querySelectorAll('.result_game button');
@@ -298,7 +269,6 @@ document.addEventListener('DOMContentLoaded', () => {
       matchList.querySelectorAll('.match_item').forEach(item => {
         item.style.display = (game === null || item.classList.contains(game)) ? '' : 'none';
       });
-      updateMatchListByMonth();
     });
   });
 
@@ -307,7 +277,6 @@ document.addEventListener('DOMContentLoaded', () => {
       currentDate.setMonth(currentDate.getMonth() - 1);
       renderCalendar();
       if (scheduleListElement) scheduleListElement.innerHTML = '';
-      updateMatchListByMonth();
     });
   }
 
@@ -316,7 +285,6 @@ document.addEventListener('DOMContentLoaded', () => {
       currentDate.setMonth(currentDate.getMonth() + 1);
       renderCalendar();
       if (scheduleListElement) scheduleListElement.innerHTML = '';
-      updateMatchListByMonth();
     });
   }
 
@@ -325,9 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCalendar();
     showMonthSchedules();
   }
-
-  // 초기 상태 로드
-  updateMatchListByMonth();
 
   /* ============================================================
      3. Partner Line - 좌→우 무한 마퀴
