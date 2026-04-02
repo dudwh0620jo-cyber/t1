@@ -255,30 +255,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // match_list: 2026년 3월일 때만 표시
+  // 경기 결과 섹션 표시 조건 관리 (2026.3월 & LOL/ALL 필터인 경우만 노출)
   function updateMatchListByMonth() {
-    if (!matchList || !monthYearElement) return;
-    
-    // 현재 표시된 연월 텍스트 확인
-    const yearMonth = monthYearElement.textContent.trim();
-    
-    // 하단 필터 중 LEAGUE OF LEGENDS(r_lol) 또는 ALL MATCH(r_all)가 활성화되었는지 확인
-    const activeBtn = document.querySelector('.result_game button.active');
-    const isLolOrAllActive = activeBtn && (activeBtn.id === 'r_lol' || activeBtn.id === 'r_all');
-    
-    // 1. 연월이 '2026.3'인지 확인 (직접 텍스트 비교)
-    const isTargetMonth = yearMonth === '2026.3';
-    
-    // 2. 상단 필터(select_box)의 상태도 고려 (만약 상단 필터가 LOL이 아니면 하단 리스트가 비어있을 수 있음)
-    const topFilterBtn = document.querySelector('.schedule_filter');
-    const isTopFilterLol = topFilterBtn && topFilterBtn.textContent.toLowerCase().includes('league of legends');
+    const list = document.querySelector('.match_list');
+    if (!list) return;
 
-    // 최종 조건: 2026.3월이고, (하단 필터가 LOL/ALL 중 하나이거나 또는 상단 필터가 LOL인 경우)
-    // 유저 요청 'r_lol 이고 monthYear 2026.3' 에 가장 충실하게 대응
-    if (isTargetMonth && (isLolOrAllActive || isTopFilterLol)) {
-      matchList.style.display = 'flex';
+    // 1. 달력 기반 연도/월 값 확인 (2026.3)
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1; // 1-indexed (March=3)
+    const isTargetMonth = (year === 2026 && month === 3);
+
+    // 2. 현재 선택된 필터 버튼 확인
+    const activeBtn = document.querySelector('.result_game button.active');
+    const isShowableGame = activeBtn && (activeBtn.id === 'r_lol' || activeBtn.id === 'r_all');
+
+    // 최종 조건 합치기
+    if (isTargetMonth && isShowableGame) {
+      list.style.setProperty('display', 'flex', 'important');
     } else {
-      matchList.style.display = 'none';
+      list.style.setProperty('display', 'none', 'important');
     }
   }
 
