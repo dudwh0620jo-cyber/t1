@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Phase 4: span(T, 1) 확대
   mainTl.fromTo('.main_visual .txt h2 span',
-    { scale: 1 },
-    { scale: 80, duration: 0.6, ease: 'power1.in' },
+    { scale: 1, transformOrigin: '50% 50%' },
+    { scale: 80, duration: 0.6, ease: 'power1.inOut', transformOrigin: '50% 50%', force3D: true },
     0.2);
 
   // Phase 5: main_visual 페이드아웃 + 오버레이/텍스트 페이드인
@@ -217,11 +217,97 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // select_box li 클릭 → 필터 텍스트 변경 + match_results 필터링
+  const gameMap = {
+    s_lol: 'lol', s_val: 'val', s_ove: 'ove',
+    s_pub: 'pub', s_fc: 'fc', s_tea: 'tea', s_fig: 'fig'
+  };
+
+  const matchList = document.querySelector('.match_list');
+
+  document.querySelectorAll('.select_box ul li button').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+
+      // 필터 버튼 텍스트 교체 (아이콘 유지)
+      if (filterBtn) {
+        const icon = filterBtn.querySelector('i');
+        filterBtn.textContent = btn.textContent.trim();
+        if (icon) filterBtn.appendChild(icon);
+        filterBtn.classList.remove('on');
+      }
+      if (filterMenu) filterMenu.classList.remove('on');
+
+      // schedule_list 초기화 + 달력 active 제거
+      if (scheduleListElement) scheduleListElement.innerHTML = '';
+      if (daysContainer) {
+        daysContainer.querySelectorAll('.day_num.active').forEach(el => el.classList.remove('active'));
+      }
+
+      // match_results 필터링
+      const game = gameMap[btn.id];
+      if (!game || !matchList) return;
+      matchList.querySelectorAll('.match_item').forEach(item => {
+        item.style.display = item.classList.contains(game) ? '' : 'none';
+      });
+      // 필터가 변경되었으니 가시성 재확인 (상단 필터용)
+      updateMatchListByMonth();
+    });
+  });
+
+  // match_list: 2026년 3월일 때만 표시
+  function updateMatchListByMonth() {
+    if (!matchList || !monthYearElement) return;
+    
+    // 현재 표시된 연월 텍스트 확인
+    const yearMonth = monthYearElement.textContent.trim();
+    
+    // 하단 필터 중 LEAGUE OF LEGENDS(r_lol) 또는 ALL MATCH(r_all)가 활성화되었는지 확인
+    const activeBtn = document.querySelector('.result_game button.active');
+    const isLolOrAllActive = activeBtn && (activeBtn.id === 'r_lol' || activeBtn.id === 'r_all');
+    
+    // 1. 연월이 '2026.3'인지 확인 (직접 텍스트 비교)
+    const isTargetMonth = yearMonth === '2026.3';
+    
+    // 2. 상단 필터(select_box)의 상태도 고려 (만약 상단 필터가 LOL이 아니면 하단 리스트가 비어있을 수 있음)
+    const topFilterBtn = document.querySelector('.schedule_filter');
+    const isTopFilterLol = topFilterBtn && topFilterBtn.textContent.toLowerCase().includes('league of legends');
+
+    // 최종 조건: 2026.3월이고, (하단 필터가 LOL/ALL 중 하나이거나 또는 상단 필터가 LOL인 경우)
+    // 유저 요청 'r_lol 이고 monthYear 2026.3' 에 가장 충실하게 대응
+    if (isTargetMonth && (isLolOrAllActive || isTopFilterLol)) {
+      matchList.style.display = 'flex';
+    } else {
+      matchList.style.display = 'none';
+    }
+  }
+
+  // result_game 버튼 필터링
+  const resultBtns = document.querySelectorAll('.result_game button');
+  const resultGameMap = {
+    r_all: null, r_lol: 'lol', r_val: 'val', r_ove: 'ove',
+    r_pub: 'pub', r_fc: 'fc', r_tea: 'tea', r_fig: 'fig'
+  };
+
+  resultBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      resultBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (!matchList) return;
+      const game = resultGameMap[btn.id];
+      matchList.querySelectorAll('.match_item').forEach(item => {
+        item.style.display = (game === null || item.classList.contains(game)) ? '' : 'none';
+      });
+      updateMatchListByMonth();
+    });
+  });
+
   if (prevBtn) {
     prevBtn.addEventListener('click', () => {
       currentDate.setMonth(currentDate.getMonth() - 1);
       renderCalendar();
-      showMonthSchedules();
+      if (scheduleListElement) scheduleListElement.innerHTML = '';
+      updateMatchListByMonth();
     });
   }
 
@@ -229,7 +315,8 @@ document.addEventListener('DOMContentLoaded', () => {
     nextBtn.addEventListener('click', () => {
       currentDate.setMonth(currentDate.getMonth() + 1);
       renderCalendar();
-      showMonthSchedules();
+      if (scheduleListElement) scheduleListElement.innerHTML = '';
+      updateMatchListByMonth();
     });
   }
 
@@ -237,5 +324,39 @@ document.addEventListener('DOMContentLoaded', () => {
   if (daysContainer) {
     renderCalendar();
     showMonthSchedules();
+  }
+
+  // 초기 상태 로드
+  updateMatchListByMonth();
+
+  /* ============================================================
+     3. Partner Line - 좌→우 무한 마퀴
+  ============================================================ */
+  document.querySelectorAll('.partner_line .line').forEach(line => {
+    const items = Array.from(line.children);
+    items.forEach(item => line.appendChild(item.cloneNode(true)));
+  });
+
+  /* ============================================================
+     4. Season Team - 스크롤 연동 가로 슬라이드 + 핀 고정
+  ============================================================ */
+  const swiperWrapper = document.querySelector('.season_team .swiper-wrapper');
+  if (swiperWrapper) {
+    const getScrollAmount = () => -(swiperWrapper.scrollWidth - window.innerWidth);
+
+    gsap.to(swiperWrapper, {
+      x: getScrollAmount,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.season_team',
+        start: 'top top',
+        end: () => '+=' + Math.abs(getScrollAmount()),
+        pin: true,
+        scrub: 1,
+        pinSpacing: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      }
+    });
   }
 });
