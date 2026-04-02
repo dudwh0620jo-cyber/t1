@@ -1,13 +1,60 @@
 @charset "utf-8";
 
+/* main_v_wrap */
+.main_v_wrap {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+
 /* main_visual */
 .main_visual {
-  height: 90vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  overflow: hidden;
+  z-index: 2;
+  mix-blend-mode: screen;
+}
+
+/* main_v_wrap 내부 video01: 블렌드 배경으로 사용 */
+.main_v_wrap .video01 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+  padding: 0;
+}
+
+/* main_v_wrap 안에서는 ::after 비활성화 (video_overlay로 대체) */
+.main_v_wrap .video01::after {
+  display: none;
+}
+
+/* 실제 오버레이 (GSAP으로 제어 가능) */
+.video_overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  opacity: 0;
+}
+
+/* main_v_wrap 안의 video01 container: 초기 숨김 */
+.main_v_wrap .video01 .container {
+  opacity: 0;
 }
 
 .main_visual .txt h2 {
@@ -17,13 +64,19 @@
 }
 
 .main_visual .txt h2 span {
+  display: inline-block;
   color: var(--main-red);
   font-size: 20rem;
+  transform-origin: center center;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .video_section {
-  position: relative;
-  height: 90vh;
+  position: sticky;
+  top: 0;
+  height: 100vh;
   overflow: hidden;
   color: var(--w-color);
   padding: 80px;
@@ -219,6 +272,7 @@
 
 /* partner_line */
 .partner_line {
+  position: relative;
   width: 100%;
   height: auto;
   display: flex;
@@ -257,6 +311,7 @@
 }
 
 .partner {
+  position: relative;
   width: 100%;
   height: 1080px;
   padding: 100px 80px 200px;
@@ -356,8 +411,284 @@
   font-size: 2rem;
 }
 
+
+/* Match Schedule Section */
+.match_schedule {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  padding: 80px 80px;
+  background: linear-gradient(180deg,
+      #0a0a0a 0%,
+      #0a0a0a 25%,
+      #302f2d 50%,
+      #0a0a0a 75%,
+      #0a0a0a 100%);
+  color: var(--w-color);
+  overflow: hidden;
+}
+
+/* Section Top (Title & Filter) */
+.match_schedule .m_top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 20px;
+}
+
+/* Select Box (Game Filter Dropdown) */
+.match_schedule .select_box {
+  position: relative;
+  z-index: 100;
+}
+
+.match_schedule .schedule_filter {
+  width: 261px;
+  height: 69px;
+  background: none;
+  border: 1px solid #444;
+  border-radius: 50px;
+  color: var(--w-color);
+  font-size: 1.25rem;
+  padding: 0 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.match_schedule .schedule_filter i {
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.match_schedule .schedule_filter.on i {
+  transform: rotate(180deg);
+}
+
+.match_schedule .select_box ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: rgba(27, 27, 27, 0.95);
+  border: 1px solid #333;
+  border-radius: 12px;
+  overflow: hidden;
+  display: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.match_schedule .select_box ul.on {
+  display: block;
+}
+
+.match_schedule .select_box ul li {
+  border-bottom: 1px solid #333;
+}
+
+.match_schedule .select_box ul li:last-child {
+  border-bottom: none;
+}
+
+.match_schedule .select_box ul li button {
+  width: 100%;
+  padding: 18px 25px;
+  background: none;
+  border: none;
+  color: #bbb;
+  text-align: left;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.match_schedule .select_box ul li button:hover {
+  background-color: #222;
+  color: var(--w-color);
+}
+
+/* Section Bottom (Calendar & List) */
+.match_schedule .m_bottom {
+  display: flex;
+  gap: 100px;
+}
+
+/* Left - Calendar */
+.match_schedule .m_left {
+  flex: 1;
+}
+
+.match_schedule .calendar .header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 200px;
+  margin-bottom: 50px;
+}
+
+.match_schedule .calendar .header h3 {
+  font-size: 2.25rem;
+  font-weight: 900;
+  letter-spacing: -1%;
+}
+
+.match_schedule .calendar .header button {
+  background: none;
+  border: none;
+  color: var(--w-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.match_schedule .calendar .header button i {
+  font-size: 1.25rem;
+}
+
+.match_schedule .calendar .header button:hover {
+  color: var(--main-red);
+}
+
+/* Calendar Days Grid */
+.match_schedule .days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  gap: 20px 0;
+}
+
+.match_schedule .day_name {
+  color: var(--main-gray);
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.match_schedule .day_num {
+  font-size: 1.125rem;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+}
+
+.match_schedule .day_num:hover:not(.empty) {
+  color: var(--main-red);
+}
+
+.match_schedule .day_num.active {
+  color: #000;
+}
+
+.match_schedule .day_num.active::after {
+  content: "";
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  background-color: #EDE6D8;
+  /* Ivory/Bone color */
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.match_schedule .day_num.today {
+  color: var(--main-red);
+  font-weight: 700;
+}
+
+/* Right - Schedule List */
+.match_schedule .m_right {
+  flex: 1;
+}
+
+.match_schedule .schedule_list {
+  display: flex;
+  flex-direction: column;
+  max-height: 520px;
+  overflow-y: auto;
+  padding-right: 15px;
+}
+
+/* Custom Scrollbar for schedule_list */
+.match_schedule .schedule_list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.match_schedule .schedule_list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+}
+
+.match_schedule .schedule_list::-webkit-scrollbar-thumb {
+  background: #FFFFFF;
+  border-radius: 2px;
+}
+
+.match_schedule .schedule_list::-webkit-scrollbar-thumb:hover {
+  background: #e0e0e0;
+}
+
+.match_schedule .schedule_item {
+  display: flex;
+  align-items: flex-start;
+  padding: 40px 0;
+  border-bottom: 1px solid #333;
+  gap: 40px;
+}
+
+.match_schedule .schedule_item:last-child {
+  border-bottom: none;
+}
+
+.match_schedule .schedule_item .date {
+  font-size: 2rem;
+  font-family: var(--Anton);
+  color: var(--w-color);
+  min-width: 80px;
+}
+
+.match_schedule .schedule_item .info_box {
+  flex: 1;
+}
+
+.match_schedule .schedule_item h4 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.match_schedule .schedule_item h4 .team_vs {
+  color: var(--main-red);
+  font-size: 1rem;
+}
+
+.match_schedule .schedule_item .desc {
+  color: #aaa;
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.match_schedule .schedule_item .meta {
+  margin-top: 5px;
+  color: #777;
+  font-size: 1rem;
+}
+
+.match_schedule .schedule_item .meta span {
+  margin-right: 15px;
+}
+
 /* match_results */
 .match_results {
+  position: relative;
   width: 100%;
   height: 1080px;
   padding: 80px 80px 180px;
@@ -405,9 +736,11 @@
 
 /* 오른쪽 경기 리스트 */
 .match_list {
+  width: 906px;
   display: flex;
   flex-direction: column;
   gap: 30px;
+  color: var(--w-color);
 }
 
 .match_item {
@@ -415,30 +748,74 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  height: 113px;
   gap: 150px;
 }
 
 .match_item .rally {
   display: flex;
   align-items: center;
-  gap: 24px;
+}
+
+.match_item .rally_logo {
+  display: flex;
+  align-items: center;
+  width: 120px;
+  height: 80px;
+  padding-right: 40px;
+  border-right: 1px solid var(--w-color);
+}
+
+.match_item .rally_logo img {
+  width: 100%;
+  height: auto;
+}
+
+.match_item .rally_txt {
+  width: 165px;
+  padding-left: 40px;
 }
 
 .match_item .rally p {
-  line-height: 1.4;
-  font-size: 1.125rem;
+  line-height: 1.1;
+  font-size: 26px;
+  letter-spacing: -2%;
 }
 
-.match_item h4 {
+.match_item .score {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 421px;
+  height: 113px;
+}
+
+.match_item .score_left,
+.match_item .score_right {
+  display: flex;
+  align-items: center;
+}
+
+.match_item .score_left img,
+.match_item .score_right img {
+  width: 80px;
+}
+
+.match_item .score_txt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 113px;
+  gap: 150px;
+}
+
+.match_item .score_txt h4 {
   font-size: 2rem;
   font-family: var(--Anton);
   color: var(--w-color);
 }
 
-.match_item h4 span {
+.match_item .score_txt h4 span {
   color: var(--main-red);
-}
-
-.match_results img {
-  width: 80px;
 }

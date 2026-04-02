@@ -18,7 +18,10 @@
   <!-- 내 media css -->
   <script src="https://kit.fontawesome.com/62f851aff9.js" crossorigin="anonymous"></script>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="js/common.js"></script>
+  <script src="js/main.js"></script>
   <!-- 내 js -->
 </head>
 
@@ -123,24 +126,25 @@
       </div><!-- //.ham_menu -->
     </header>
     <main>
-      <section class="main_visual">
-        <div class="txt">
-          <h2>
-            <span>T</span>eam <span>1</span>st
-          </h2>
-        </div><!-- //.txt -->
-      </section>
-      <section class="video_section video01">
-        <figure><video src="img/main/main_visual/main01.mp4" loop autoplay muted playsinline></video>
-        </figure>
-        <div class="container">
-          <h2>T eam 1 st , T he One<br>T ogether as 1</h2>
-          <p>T1은 대한민국을 대표하는 글로벌 e스포츠 기업으로,<br>리그 오브 레전드(LoL)를 비롯한 다양한 종목에서 <br>세계 최고 수준의 경쟁력을 보여주고 있습니다.<br>전통과 혁신을 동시에
-            갖춘
-            T1은 수많은
-            우승 기록과 스타 선수들을 배출하며<br>전 세계 팬들과 함께 성장해 온 e스포츠 명문 팀입니다.</p>
-        </div><!-- //.container -->
-      </section>
+      <div class="main_v_wrap">
+        <section class="video_section video01">
+          <figure><video src="img/main/main_visual/main01.mp4" loop autoplay muted playsinline></video>
+          </figure>
+          <div class="video_overlay"></div>
+          <div class="container">
+            <h2>T eam 1 st , T he One<br>T ogether as 1</h2>
+            <p>T1은 대한민국을 대표하는 글로벌 e스포츠 기업으로,<br>리그 오브 레전드(LoL)를 비롯한 다양한 종목에서 <br>세계 최고 수준의 경쟁력을 보여주고 있습니다.<br>전통과 혁신을
+              동시에 갖춘 T1은 수많은 우승 기록과 스타 선수들을 배출하며<br>전 세계 팬들과 함께 성장해 온 e스포츠 명문 팀입니다.</p>
+          </div><!-- //.container -->
+        </section>
+        <section class="main_visual">
+          <div class="txt">
+            <h2>
+              <span>T</span>eam <span>1</span>st
+            </h2>
+          </div><!-- //.txt -->
+        </section>
+      </div><!-- //.main_v_wrap -->
       <section class="video_section video02">
         <figure><video src="img/main/main_visual/main02.mp4" loop autoplay muted playsinline></video>
         </figure>
@@ -365,9 +369,9 @@
         <div class="m_top">
           <h2 class="tit_eng">Match Schedule</h2>
           <div class="select_box">
-            <button type="button" class="schedule_filter">schedule <i class="fa-solid fa-angle-up"></i></button>
+            <button type="button" class="schedule_filter">League of Legends <i
+                class="fa-solid fa-angle-down"></i></button>
             <ul>
-              <li><button type="button" id="s_all">All</button></li>
               <li><button type="button" id="s_lol">League of Legends</button></li>
               <li><button type="button" id="s_val">Valorant</button></li>
               <li><button type="button" id="s_ove">overwatch 2</button></li>
@@ -391,27 +395,7 @@
           </div><!-- //.m_left -->
           <div class="m_right">
             <ul class="schedule_list">
-              <li class="schedule_item lol">
-                <div class="date"></div>
-                <div class="info">
-                  <h4></h4>
-                  <span><br></span>
-                </div>
-              </li>
-              <li class="schedule_item lol">
-                <div class="date"></div>
-                <div class="info">
-                  <h4></h4>
-                  <span><br></span>
-                </div>
-              </li>
-              <li class="schedule_item lol">
-                <div class="date"></div>
-                <div class="info">
-                  <h4></h4>
-                  <span><br></span>
-                </div>
-              </li>
+              <!-- JS에서 동적으로 생성됩니다. -->
             </ul>
           </div><!-- //.m_right -->
         </div><!-- //.m_bottom -->
@@ -435,57 +419,107 @@
             <ul class="match_list">
               <li class="match_item lol">
                 <div class="rally">
-                  <img src="img/logo/lck_white.png" alt="lck">
-                  <p>WORLDS 2025<br>vs KT</p>
+                  <div class="rally_logo">
+                    <img src="img/logo/lck_white.png" alt="lck">
+                  </div>
+                  <div class="rally_txt">
+                    <p>WORLDS 2025<br>vs KT</p>
+                  </div>
                 </div><!-- //.rally -->
                 <div class="score">
-                  <img src="img/logo/logo_red.png" alt="t1">
-                  <h4><span>3 ◂ </span>2</h4>
-                  <img src="img/logo/kt.png" alt="kt">
+                  <div class="score_left">
+                    <img src="img/logo/logo_red.png" alt="t1">
+                  </div>
+                  <div class="score_txt">
+                    <h4><span>3 ◂ </span>2</h4>
+                  </div>
+                  <div class="score_right">
+                    <img src="img/logo/kt.png" alt="kt">
+                  </div>
                 </div><!-- //.score -->
               </li>
               <li class="match_item lol">
                 <div class="rally">
-                  <img src="img/logo/lck_white.png" alt="lck">
-                  <p>WORLDS 2025<br>vs IG</p>
+                  <div class="rally_logo">
+                    <img src="img/logo/lck_white.png" alt="lck">
+                  </div>
+                  <div class="rally_txt">
+                    <p>WORLDS 2025<br>vs IG</p>
+                  </div>
                 </div><!-- //.rally -->
                 <div class="score">
-                  <img src="img/logo/logo_red.png" alt="t1">
-                  <h4><span>3 ◂ </span>0</h4>
-                  <img src="img/logo/ig.png" alt="ig">
+                  <div class="score_left">
+                    <img src="img/logo/logo_red.png" alt="t1">
+                  </div>
+                  <div class="score_txt">
+                    <h4><span>3 ◂ </span>0</h4>
+                  </div>
+                  <div class="score_right">
+                    <img src="img/logo/ig.png" alt="ig">
+                  </div>
                 </div><!-- //.score -->
               </li>
               <li class="match_item lol">
                 <div class="rally">
-                  <img src="img/logo/lck_white.png" alt="lck">
-                  <p>WORLDS 2025<br>vs AL</p>
+                  <div class="rally_logo">
+                    <img src="img/logo/lck_white.png" alt="lck">
+                  </div>
+                  <div class="rally_txt">
+                    <p>WORLDS 2025<br>vs AL</p>
+                  </div>
                 </div><!-- //.rally -->
                 <div class="score">
-                  <img src="img/logo/logo_red.png" alt="t1">
-                  <h4><span>3 ◂ </span>2</h4>
-                  <img src="img/logo/al.png" alt="al">
+                  <div class="score_left">
+                    <img src="img/logo/logo_red.png" alt="t1">
+                  </div>
+                  <div class="score_txt">
+                    <h4><span>3 ◂ </span>2</h4>
+                  </div>
+                  <div class="score_right">
+                    <img src="img/logo/al.png" alt="al">
+                  </div>
                 </div><!-- //.score -->
               </li>
               <li class="match_item lol">
                 <div class="rally">
-                  <img src="img/logo/lck_white.png" alt="lck">
-                  <p>WORLDS 2025<br>vs MKOI</p>
+                  <div class="rally_logo">
+                    <img src="img/logo/lck_white.png" alt="lck">
+                  </div>
+                  <div class="rally_txt">
+                    <p>WORLDS 2025<br>vs MKOI</p>
+                  </div>
                 </div><!-- //.rally -->
                 <div class="score">
-                  <img src="img/logo/logo_red.png" alt="t1">
-                  <h4><span>2 ◂ </span>0</h4>
-                  <img src="img/logo/moki.png" alt="moki">
+                  <div class="score_left">
+                    <img src="img/logo/logo_red.png" alt="t1">
+                  </div>
+                  <div class="score_txt">
+                    <h4><span>2 ◂ </span>0</h4>
+                  </div>
+                  <div class="score_right">
+                    <img src="img/logo/moki.png" alt="moki">
+                  </div>
                 </div><!-- //.score -->
               </li>
               <li class="match_item lol">
                 <div class="rally">
-                  <img src="img/logo/lck_white.png" alt="lck">
-                  <p>WORLDS 2025<br>vs 100</p>
+                  <div class="rally_logo">
+                    <img src="img/logo/lck_white.png" alt="lck">
+                  </div>
+                  <div class="rally_txt">
+                    <p>WORLDS 2025<br>vs 100</p>
+                  </div>
                 </div><!-- //.rally -->
                 <div class="score">
-                  <img src="img/logo/logo_red.png" alt="t1">
-                  <h4><span>2 ◂ </span>0</h4>
-                  <img src="img/logo/thieves.png" alt="thieves">
+                  <div class="score_left">
+                    <img src="img/logo/logo_red.png" alt="t1">
+                  </div>
+                  <div class="score_txt">
+                    <h4><span>2 ◂ </span>0</h4>
+                  </div>
+                  <div class="score_right">
+                    <img src="img/logo/thieves.png" alt="thieves">
+                  </div>
                 </div><!-- //.score -->
               </li>
             </ul>
