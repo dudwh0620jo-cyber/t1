@@ -1,5 +1,10 @@
 @charset "utf-8";
 
+.wrap {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 /* main_v_wrap */
 .main_v_wrap {
   position: relative;
@@ -430,7 +435,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 5px; /* Visual adjustment for + position */
+  padding-bottom: 5px;
+  /* Visual adjustment for + position */
 }
 
 
