@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
       pin: true,
       scrub: true,
       pinSpacing: true,
+      toggleActions: "play reverse play reverse",
     }
   });
 
